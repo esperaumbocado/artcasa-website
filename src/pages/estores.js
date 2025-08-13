@@ -2,8 +2,10 @@ import * as React from "react"
 import Navigation from "../components/Navigation"
 import Footer from "../components/Footer"
 import CallToAction from "../components/CallToAction"
+import { useGalleryData } from "../hooks/useGalleryData"
 
 const EstoresPage = () => {
+  const galleryData = useGalleryData()
   const [activeGallery, setActiveGallery] = React.useState(null)
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0)
 
@@ -31,7 +33,8 @@ const EstoresPage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
   }
 
-  const exteriorEstores = [
+  // Get data from Notion or fallback to hardcoded data
+  const exteriorEstores = galleryData['estores-exterior'] || [
     {
       name: "Rolo",
       description: "Estores de rolo resistentes para exteriores, ideais para terraços e varandas",
@@ -63,7 +66,7 @@ const EstoresPage = () => {
     }
   ]
 
-  const interiorEstores = [
+  const interiorEstores = galleryData['estores-interior'] || [
     {
       name: "Rolo Interior",
       description: "Estores de rolo para controlo perfeito da luminosidade interior",
@@ -127,9 +130,9 @@ const EstoresPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-wrap justify-center gap-8">
             {exteriorEstores.map((store, index) => (
-              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full">
+              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full w-full sm:w-80 lg:w-96">
                 <div className="h-64 overflow-hidden relative">
                   <img 
                     src={store.images[0]} 
@@ -195,9 +198,9 @@ const EstoresPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-wrap justify-center gap-8">
             {interiorEstores.map((store, index) => (
-              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full">
+              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full w-full sm:w-80 lg:w-96">
                 <div className="h-64 overflow-hidden relative">
                   <img 
                     src={store.images[0]} 
@@ -253,10 +256,10 @@ const EstoresPage = () => {
       {/* Gallery Modal */}
       {activeGallery && (
         <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
-          <div className="max-w-4xl w-full relative">
+          <div className="max-w-5xl w-full h-full flex flex-col">
             {/* Header */}
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-black text-white uppercase tracking-wide">
+            <div className="flex justify-between items-center mb-4 flex-shrink-0">
+              <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-wide">
                 {activeGallery.startsWith('exterior') 
                   ? `${exteriorEstores[parseInt(activeGallery.split('-')[1])].name} - ${currentImageIndex + 1} de ${exteriorEstores[parseInt(activeGallery.split('-')[1])].images.length}`
                   : `${interiorEstores[parseInt(activeGallery.split('-')[1])].name} - ${currentImageIndex + 1} de ${interiorEstores[parseInt(activeGallery.split('-')[1])].images.length}`
@@ -264,21 +267,21 @@ const EstoresPage = () => {
               </h3>
               <button 
                 onClick={closeGallery}
-                className="text-white hover:text-[#B5720A] text-3xl font-bold transition-colors"
+                className="text-white hover:text-[#B5720A] text-2xl md:text-3xl font-bold transition-colors"
               >
                 ×
               </button>
             </div>
             
             {/* Main Image */}
-            <div className="relative">
+            <div className="relative flex-1 flex items-center justify-center min-h-0">
               <img 
                 src={(activeGallery.startsWith('exterior') 
                   ? exteriorEstores[parseInt(activeGallery.split('-')[1])].images 
                   : interiorEstores[parseInt(activeGallery.split('-')[1])].images
                 )[currentImageIndex]} 
                 alt={`Galeria ${currentImageIndex + 1}`}
-                className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
+                className="max-w-full max-h-full object-contain rounded-lg"
               />
               
               {/* Navigation Arrows */}
@@ -297,7 +300,7 @@ const EstoresPage = () => {
             </div>
             
             {/* Thumbnails */}
-            <div className="flex justify-center mt-6 space-x-2 overflow-x-auto">
+            <div className="flex justify-center mt-6 space-x-2 overflow-x-auto flex-shrink-0">
               {(activeGallery.startsWith('exterior') 
                 ? exteriorEstores[parseInt(activeGallery.split('-')[1])].images 
                 : interiorEstores[parseInt(activeGallery.split('-')[1])].images

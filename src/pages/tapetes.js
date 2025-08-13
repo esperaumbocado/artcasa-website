@@ -2,8 +2,10 @@ import * as React from "react"
 import Navigation from "../components/Navigation"
 import Footer from "../components/Footer"
 import CallToAction from "../components/CallToAction"
+import { useGalleryData } from "../hooks/useGalleryData"
 
 const TapetesPage = () => {
+  const galleryData = useGalleryData()
   const [activeGallery, setActiveGallery] = React.useState(null)
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0)
 
@@ -25,16 +27,27 @@ const TapetesPage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + tapetesItems.length) % tapetesItems.length)
   }
 
-  const tapetesItems = [
-    "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-  ]
+  // Get data from Notion or fallback to hardcoded data
+  const items = galleryData['tapetes'] || []
+  console.log('🏠 Tapetes Debug:', {
+    galleryDataKeys: Object.keys(galleryData),
+    tapetesItems: items,
+    itemCount: items.length,
+    hasImages: items.map(item => ({ name: item.name, imageCount: item.images?.length || 0 }))
+  })
+  
+  const tapetesItems = items.length > 0 
+    ? items.flatMap(item => item.images || [])
+    : [
+        "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      ]
 
   return (
     <div className="min-h-screen bg-white">
@@ -44,8 +57,7 @@ const TapetesPage = () => {
       <section className="relative py-24 bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-black leading-none mb-6">
-            TAPETES
-            <span className="block text-[#B5720A]">PREMIUM</span>
+            <span className="block text-[#B5720A]">TAPETES</span>
           </h1>
           <div className="w-32 h-2 bg-black mx-auto mb-8"></div>
           <p className="text-xl text-gray-700 leading-relaxed font-medium max-w-3xl mx-auto">
@@ -87,26 +99,26 @@ const TapetesPage = () => {
       {/* Gallery Modal */}
       {activeGallery && (
         <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
-          <div className="max-w-4xl w-full relative">
+          <div className="max-w-5xl w-full h-full flex flex-col">
             {/* Header */}
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-black text-white uppercase tracking-wide">
+            <div className="flex justify-between items-center mb-4 flex-shrink-0">
+              <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-wide">
                 Tapetes - {currentImageIndex + 1} de {tapetesItems.length}
               </h3>
               <button 
                 onClick={closeGallery}
-                className="text-white hover:text-[#B5720A] text-3xl font-bold transition-colors"
+                className="text-white hover:text-[#B5720A] text-2xl md:text-3xl font-bold transition-colors"
               >
                 ×
               </button>
             </div>
             
             {/* Main Image */}
-            <div className="relative">
+            <div className="relative flex-1 flex items-center justify-center min-h-0">
               <img 
                 src={tapetesItems[currentImageIndex]} 
                 alt={`Tapetes ${currentImageIndex + 1}`}
-                className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
+                className="max-w-full max-h-full object-contain rounded-lg"
               />
               
               {/* Navigation Arrows */}

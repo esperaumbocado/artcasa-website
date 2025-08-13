@@ -2,8 +2,10 @@ import * as React from "react"
 import Navigation from "../components/Navigation"
 import Footer from "../components/Footer"
 import CallToAction from "../components/CallToAction"
+import { useGalleryData } from "../hooks/useGalleryData"
 
 const PapelParedePage = () => {
+  const galleryData = useGalleryData()
   const [activeGallery, setActiveGallery] = React.useState(null)
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0)
 
@@ -25,7 +27,11 @@ const PapelParedePage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + papelItems.length) % papelItems.length)
   }
 
-  const papelItems = [
+  // Get data from Notion or fallback to hardcoded data
+  const items = galleryData['papel-parede'] || []
+  const papelItems = items.length > 0 
+    ? items.flatMap(item => item.images || [])
+    : [
     "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "https://images.unsplash.com/photo-1556020685-ae41abfc9365?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",

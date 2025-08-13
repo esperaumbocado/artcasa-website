@@ -2,8 +2,10 @@ import * as React from "react"
 import Navigation from "../components/Navigation"
 import Footer from "../components/Footer"
 import CallToAction from "../components/CallToAction"
+import { useGalleryData } from "../hooks/useGalleryData"
 
 const EstofosPage = () => {
+  const galleryData = useGalleryData()
   const [activeGallery, setActiveGallery] = React.useState(null)
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0)
 
@@ -25,7 +27,11 @@ const EstofosPage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + estofosItems.length) % estofosItems.length)
   }
 
-  const estofosItems = [
+  // Get data from Notion or fallback to hardcoded data
+  const items = galleryData['estofos'] || []
+  const estofosItems = items.length > 0 
+    ? items.flatMap(item => item.images || [])
+    : [
     "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",

@@ -1,7 +1,12 @@
 import * as React from "react"
 import logoImage from "../images/logo.png"
+import estoresImage from "../images/estores.png"
+import tapetesImage from "../images/tapetes.png"
+import cortinadosImage from "../images/cortinados.png"
+import papelparedeImage from "../images/papelparede.png"
 import Navigation from "../components/Navigation"
 import Footer from "../components/Footer"
+import heroImage from "../images/hero.png"  
 
 const IndexPage = () => {
   return (
@@ -10,7 +15,7 @@ const IndexPage = () => {
 
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex items-center bg-cover bg-center bg-gray-800" 
-               style={{backgroundImage: "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80')"}}>
+               style={{backgroundImage: `url(${heroImage})`}}>
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/60 z-0"></div>
         
@@ -59,30 +64,30 @@ const IndexPage = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-wrap justify-center gap-8">
             {[
               { 
                 name: "Estores", 
-                description: "Estores de rolo, venezianas e plissados de alta qualidade",
-                image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                description: "Estores de qualidade superior para todos os espaços",
+                image: estoresImage,
                 link: "/estores"
               },
               { 
                 name: "Cortinados", 
                 description: "Cortinas elegantes e funcionais para todos os espaços",
-                image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                image: cortinadosImage,
                 link: "#"
               },
               { 
                 name: "Tapetes", 
                 description: "Tapetes premium que complementam qualquer decoração",
-                image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                image: tapetesImage,
                 link: "/tapetes"
               },
               { 
                 name: "Papel de Parede", 
                 description: "Papéis de parede modernos e clássicos",
-                image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                image: papelparedeImage,
                 link: "/papel-parede"
               },
               { 
@@ -98,8 +103,8 @@ const IndexPage = () => {
                 link: "/estofos"
               }
             ].map((category, index) => (
-              <div key={index} className="group cursor-pointer h-full">
-                <div className="bg-white rounded-lg p-8 hover:bg-gray-50 transition-colors border border-gray-200 hover:border-black shadow-sm hover:shadow-lg h-full flex flex-col">
+              <div key={index} className="group cursor-pointer w-full sm:w-80 lg:w-96">
+                <div className="bg-white rounded-lg p-8 hover:bg-gray-50 transition-colors border border-gray-200 hover:border-black shadow-sm hover:shadow-lg h-96 flex flex-col">
                   <div className="h-32 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg mb-6 overflow-hidden border border-gray-100">
                     <img 
                       src={category.image} 
@@ -109,7 +114,7 @@ const IndexPage = () => {
                   </div>
                   <h3 className="text-2xl font-black text-black mb-3 uppercase tracking-wide">{category.name}</h3>
                   <p className="text-gray-700 mb-4 font-medium flex-1">{category.description}</p>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-auto">
                     <a href={category.link} className="text-[#B5720A] font-medium hover:underline">Saber mais</a>
                     <span className="text-black font-bold">→</span>
                   </div>

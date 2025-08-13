@@ -1,3 +1,10 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
+// Fallback to .env if the environment-specific file doesn't exist
+require('dotenv').config()
+
 /**
  * @type {import('gatsby').GatsbyConfig}
  */

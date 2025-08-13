@@ -2,8 +2,10 @@ import * as React from "react"
 import Navigation from "../components/Navigation"
 import Footer from "../components/Footer"
 import CallToAction from "../components/CallToAction"
+import { useGalleryData } from "../hooks/useGalleryData"
 
 const TexteisLarPage = () => {
+  const galleryData = useGalleryData()
   const [activeGallery, setActiveGallery] = React.useState(null)
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0)
 
@@ -25,16 +27,20 @@ const TexteisLarPage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + texteisItems.length) % texteisItems.length)
   }
 
-  const texteisItems = [
-    "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-  ]
+  // Get data from Notion or fallback to hardcoded data
+  const items = galleryData['texteis-lar'] || []
+  const texteisItems = items.length > 0 
+    ? items.flatMap(item => item.images || [])
+    : [
+        "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      ]
 
   return (
     <div className="min-h-screen bg-white">
@@ -87,26 +93,26 @@ const TexteisLarPage = () => {
       {/* Gallery Modal */}
       {activeGallery && (
         <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
-          <div className="max-w-4xl w-full relative">
+          <div className="max-w-5xl w-full h-full flex flex-col">
             {/* Header */}
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-black text-white uppercase tracking-wide">
+            <div className="flex justify-between items-center mb-4 flex-shrink-0">
+              <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-wide">
                 Têxteis Lar - {currentImageIndex + 1} de {texteisItems.length}
               </h3>
               <button 
                 onClick={closeGallery}
-                className="text-white hover:text-[#B5720A] text-3xl font-bold transition-colors"
+                className="text-white hover:text-[#B5720A] text-2xl md:text-3xl font-bold transition-colors"
               >
                 ×
               </button>
             </div>
             
             {/* Main Image */}
-            <div className="relative">
+            <div className="relative flex-1 flex items-center justify-center min-h-0">
               <img 
                 src={texteisItems[currentImageIndex]} 
                 alt={`Têxteis Lar ${currentImageIndex + 1}`}
-                className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
+                className="max-w-full max-h-full object-contain rounded-lg"
               />
               
               {/* Navigation Arrows */}
@@ -125,7 +131,7 @@ const TexteisLarPage = () => {
             </div>
             
             {/* Thumbnails */}
-            <div className="flex justify-center mt-6 space-x-2 overflow-x-auto">
+            <div className="flex justify-center mt-6 space-x-2 overflow-x-auto flex-shrink-0">
               {texteisItems.map((image, index) => (
                 <div key={index} className="flex-shrink-0">
                   <img 
