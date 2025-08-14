@@ -33,11 +33,11 @@ const TapetesPage = () => {
     galleryDataKeys: Object.keys(galleryData),
     tapetesItems: items,
     itemCount: items.length,
-    hasImages: items.map(item => ({ name: item.name, imageCount: item.images?.length || 0 }))
+    hasImages: items.map(item => ({ name: item.name, imageCount: (item.processedImages || item.images)?.length || 0 }))
   })
   
   const tapetesItems = items.length > 0 
-    ? items.flatMap(item => item.images || [])
+    ? items.flatMap(item => item.processedImages || item.images || [])
     : [
         "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
         "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",

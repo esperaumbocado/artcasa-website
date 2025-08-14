@@ -40,6 +40,7 @@ const Navigation = () => {
                 {isProductsOpen && (
                   <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
                     <a href="/estores" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-[#B5720A] font-medium">Estores</a>
+                    <a href="/cortinados" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-[#B5720A] font-medium">Cortinados</a>
                     <a href="/texteis-lar" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-[#B5720A] font-medium">Têxteis Lar</a>
                     <a href="/estofos" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-[#B5720A] font-medium">Estofos</a>
                     <a href="/papel-parede" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-[#B5720A] font-medium">Papel de Parede</a>
@@ -86,6 +87,7 @@ const Navigation = () => {
               {isProductsOpen && (
                 <div className="pl-6 space-y-1">
                   <a href="/estores" className="block text-gray-700 hover:text-[#B5720A] px-3 py-2 text-sm font-medium transition-colors" onClick={toggleMenu}>Estores</a>
+                  <a href="/cortinados" className="block text-gray-700 hover:text-[#B5720A] px-3 py-2 text-sm font-medium transition-colors" onClick={toggleMenu}>Cortinados</a>
                   <a href="/texteis-lar" className="block text-gray-700 hover:text-[#B5720A] px-3 py-2 text-sm font-medium transition-colors" onClick={toggleMenu}>Têxteis Lar</a>
                   <a href="/estofos" className="block text-gray-700 hover:text-[#B5720A] px-3 py-2 text-sm font-medium transition-colors" onClick={toggleMenu}>Estofos</a>
                   <a href="/papel-parede" className="block text-gray-700 hover:text-[#B5720A] px-3 py-2 text-sm font-medium transition-colors" onClick={toggleMenu}>Papel de Parede</a>

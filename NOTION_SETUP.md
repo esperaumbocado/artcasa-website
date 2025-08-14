@@ -17,6 +17,8 @@ Create a Notion database with the following properties:
    - Options:
      - `estores-exterior`
      - `estores-interior`
+     - `calhas`
+     - `cortinados`
      - `texteis-lar`
      - `estofos`
      - `papel-parede`
@@ -96,11 +98,19 @@ NOTION_DATABASE_ID=abc123def456
 
 ## Adding Content
 
-### For Product Pages (Estores, Têxteis, etc.)
+### For Product Pages (Estores, Cortinados, Têxteis, etc.)
 
 1. Create a new page in your database
-2. Set the **Name** (e.g., "Estores de Rolo")
-3. Select the appropriate **Page Type** (e.g., `estores-exterior`)
+2. Set the **Name** (e.g., "Estores de Rolo", "Calhas Modernas", "Cortinados Premium")
+3. Select the appropriate **Page Type**:
+   - `estores-exterior` - Exterior blinds/shutters
+   - `estores-interior` - Interior blinds/shutters  
+   - `calhas` - Curtain rails and hardware systems
+   - `cortinados` - Curtains and drapes
+   - `texteis-lar` - Home textiles
+   - `estofos` - Upholstery
+   - `papel-parede` - Wallpaper
+   - `tapetes` - Rugs and carpets
 4. Add a **Description**
 5. Upload **Images** to the Files property
 6. Optionally set an **Order** number for sorting
@@ -120,11 +130,43 @@ NOTION_DATABASE_ID=abc123def456
 
 ## Image Guidelines
 
-- Upload high-quality images (recommended: 1200px width minimum)
-- First image will be used as the main/thumbnail image
-- Subsequent images will be shown in the gallery
-- Supported formats: JPG, PNG, WebP
-- Images are automatically optimized by Gatsby
+⚠️ **Important**: Notion's uploaded images have temporary URLs that expire after ~1 hour. However, this website has been configured to automatically download and cache these images during the build process, so you can safely use Notion's file upload feature.
+
+### How Image Caching Works:
+
+1. **Upload to Notion**: Upload images directly to Notion's "Images" property
+2. **Build Process**: During site build, Gatsby automatically:
+   - Downloads all Notion images to local storage
+   - Optimizes them for web performance  
+   - Creates permanent cached versions
+   - Generates responsive image variants
+
+### Image Options:
+
+#### Option A: Upload to Notion (Recommended for Ease)
+- Upload images directly to Notion's Files property
+- Images are automatically downloaded and cached during build
+- No need to manage external hosting
+- Images are optimized automatically
+
+#### Option B: External Image Hosting (Best for Performance)
+- Upload images to Cloudinary, AWS S3, or your own server
+- Paste permanent URLs into Notion's Images field
+- Faster builds (no download needed)
+- More control over image optimization
+
+### Technical Details:
+- **Notion URLs**: Temporary, but automatically cached during build
+- **External URLs**: Used directly without caching
+- **Optimization**: All images are processed through Gatsby's image pipeline
+- **Formats**: Automatically converted to WebP/AVIF for better performance
+- **Responsive**: Multiple sizes generated for different devices
+
+### Recommended Image Specifications:
+- **Resolution**: 1200px width minimum for galleries
+- **Format**: JPG, PNG, or WebP
+- **Quality**: High quality originals (optimization happens automatically)
+- **Aspect Ratio**: Consistent ratios within each gallery for best layout
 
 ## Data Flow
 

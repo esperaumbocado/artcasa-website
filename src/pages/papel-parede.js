@@ -30,7 +30,7 @@ const PapelParedePage = () => {
   // Get data from Notion or fallback to hardcoded data
   const items = galleryData['papel-parede'] || []
   const papelItems = items.length > 0 
-    ? items.flatMap(item => item.images || [])
+    ? items.flatMap(item => item.processedImages || item.images || [])
     : [
     "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "https://images.unsplash.com/photo-1556020685-ae41abfc9365?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",

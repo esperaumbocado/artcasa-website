@@ -30,14 +30,16 @@ const ProjectsPage = () => {
   }
 
   const nextImage = () => {
-    if (selectedProject && selectedProject.images) {
-      setCurrentImageIndex((prev) => (prev + 1) % selectedProject.images.length)
+    if (selectedProject && (selectedProject.processedImages || selectedProject.images)) {
+      const images = selectedProject.processedImages || selectedProject.images
+      setCurrentImageIndex((prev) => (prev + 1) % images.length)
     }
   }
 
   const prevImage = () => {
-    if (selectedProject && selectedProject.images) {
-      setCurrentImageIndex((prev) => (prev - 1 + selectedProject.images.length) % selectedProject.images.length)
+    if (selectedProject && (selectedProject.processedImages || selectedProject.images)) {
+      const images = selectedProject.processedImages || selectedProject.images
+      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
     }
   }
 
@@ -257,7 +259,7 @@ const ProjectsPage = () => {
             <div className="flex justify-between items-center mb-4 flex-shrink-0">
               <div className="flex items-center space-x-4">
                 <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-wide">
-                  {selectedProject.name} - {currentImageIndex + 1} de {selectedProject.images?.length || 1}
+                  {selectedProject.name} - {currentImageIndex + 1} de {(selectedProject.processedImages || selectedProject.images)?.length || 1}
                 </h3>
                 {/* Mobile Description Toggle */}
                 <button 
@@ -278,13 +280,13 @@ const ProjectsPage = () => {
             {/* Main Image */}
             <div className="relative flex-1 flex items-center justify-center min-h-0">
               <img 
-                src={selectedProject.images?.[currentImageIndex] || selectedProject.image} 
+                src={(selectedProject.processedImages || selectedProject.images)?.[currentImageIndex] || selectedProject.image} 
                 alt={`${selectedProject.name} - Imagem ${currentImageIndex + 1}`}
                 className="max-w-full max-h-full object-contain rounded-lg"
               />
               
               {/* Navigation Arrows - Only show if multiple images */}
-              {selectedProject.images && selectedProject.images.length > 1 && (
+              {(selectedProject.processedImages || selectedProject.images) && (selectedProject.processedImages || selectedProject.images).length > 1 && (
                 <>
                   <button 
                     onClick={prevImage}
@@ -341,9 +343,9 @@ const ProjectsPage = () => {
             </div>
             
             {/* Thumbnails - Only show if multiple images */}
-            {selectedProject.images && selectedProject.images.length > 1 && (
+            {(selectedProject.processedImages || selectedProject.images) && (selectedProject.processedImages || selectedProject.images).length > 1 && (
               <div className="flex justify-center mt-4 space-x-2 overflow-x-auto flex-shrink-0">
-                {selectedProject.images.map((image, index) => (
+                {(selectedProject.processedImages || selectedProject.images).map((image, index) => (
                   <div key={index} className="flex-shrink-0">
                     <img 
                       src={image} 

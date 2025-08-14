@@ -46,6 +46,8 @@ async function getNotionGalleryData() {
     const data = {
       'estores-exterior': [],
       'estores-interior': [],
+      'calhas': [],
+      'cortinados': [],
       'texteis-lar': [],
       'estofos': [],
       'papel-parede': [],
@@ -58,7 +60,14 @@ async function getNotionGalleryData() {
       
       // Extract page type
       const pageType = properties['Page Type']?.select?.name
-      if (!pageType || !data[pageType]) continue
+      console.log(`🔍 Processing page with pageType: ${pageType}`)
+      
+      if (!pageType || !data[pageType]) {
+        console.log(`❌ Skipping page with pageType: ${pageType} (not found in data object)`)
+        continue
+      }
+
+      console.log(`✅ Processing valid pageType: ${pageType}`)
 
       // Extract name (title)
       const name = properties['Name']?.title?.[0]?.plain_text || 'Untitled'

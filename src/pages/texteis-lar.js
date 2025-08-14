@@ -30,7 +30,7 @@ const TexteisLarPage = () => {
   // Get data from Notion or fallback to hardcoded data
   const items = galleryData['texteis-lar'] || []
   const texteisItems = items.length > 0 
-    ? items.flatMap(item => item.images || [])
+    ? items.flatMap(item => item.processedImages || item.images || [])
     : [
         "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
         "https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",

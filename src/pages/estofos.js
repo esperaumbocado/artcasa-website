@@ -30,7 +30,7 @@ const EstofosPage = () => {
   // Get data from Notion or fallback to hardcoded data
   const items = galleryData['estofos'] || []
   const estofosItems = items.length > 0 
-    ? items.flatMap(item => item.images || [])
+    ? items.flatMap(item => item.processedImages || item.images || [])
     : [
     "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
