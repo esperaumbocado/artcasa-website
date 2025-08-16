@@ -1,4 +1,5 @@
 import * as React from "react"
+import emailjs from '@emailjs/browser'
 import logoImage from "../images/logo.png"
 import estoresImage from "../images/estores.png"
 import tapetesImage from "../images/tapetes.png"
@@ -9,6 +10,69 @@ import Footer from "../components/Footer"
 import heroImage from "../images/hero.png"  
 
 const IndexPage = () => {
+  // Contact form state
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    phone: '',
+    location: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const [submitStatus, setSubmitStatus] = React.useState(null) // 'success', 'error', or null
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus(null)
+
+    // Get EmailJS credentials from environment variables
+    const SERVICE_ID = process.env.GATSBY_EMAILJS_SERVICE_ID
+    const TEMPLATE_ID = process.env.GATSBY_EMAILJS_TEMPLATE_ID
+    const PUBLIC_KEY = process.env.GATSBY_EMAILJS_PUBLIC_KEY
+
+    try {
+      const result = await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone,
+          location: formData.location,
+          message: formData.message,
+          to_name: 'ArtCasa', // Your business name
+        },
+        PUBLIC_KEY
+      )
+      
+      if (result.status === 200) {
+        setSubmitStatus('success')
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          location: '',
+          message: ''
+        })
+      }
+    } catch (error) {
+      console.error('EmailJS Error:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
@@ -34,9 +98,12 @@ const IndexPage = () => {
               Criamos ambientes únicos e personalizados para o seu conforto.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-[#B5720A] text-white px-10 py-4 rounded-xl font-black hover:bg-[#9A5D07] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 uppercase tracking-wide">
+              <a 
+                href="#contact"
+                className="bg-[#B5720A] text-white px-10 py-4 rounded-xl font-black hover:bg-[#9A5D07] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 uppercase tracking-wide text-center"
+              >
                 Orçamento Gratuito
-              </button>
+              </a>
               <a href="/projects" className="border-2 border-white text-white px-10 py-4 rounded-xl font-black hover:bg-white hover:text-black transition-all duration-300 uppercase tracking-wide text-center">
                 Ver Projetos
               </a>
@@ -76,7 +143,7 @@ const IndexPage = () => {
                 name: "Cortinados", 
                 description: "Cortinas elegantes e funcionais para todos os espaços",
                 image: cortinadosImage,
-                link: "#"
+                link: "/cortinados"
               },
               { 
                 name: "Tapetes", 
@@ -103,7 +170,7 @@ const IndexPage = () => {
                 link: "/estofos"
               }
             ].map((category, index) => (
-              <div key={index} className="group cursor-pointer w-full sm:w-80 lg:w-96">
+              <a key={index} href={category.link} className="group cursor-pointer w-full sm:w-80 lg:w-96 block">
                 <div className="bg-white rounded-lg p-8 hover:bg-gray-50 transition-colors border border-gray-200 hover:border-black shadow-sm hover:shadow-lg h-96 flex flex-col">
                   <div className="h-32 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg mb-6 overflow-hidden border border-gray-100">
                     <img 
@@ -115,11 +182,11 @@ const IndexPage = () => {
                   <h3 className="text-2xl font-black text-black mb-3 uppercase tracking-wide">{category.name}</h3>
                   <p className="text-gray-700 mb-4 font-medium flex-1">{category.description}</p>
                   <div className="flex items-center justify-between mt-auto">
-                    <a href={category.link} className="text-[#B5720A] font-medium hover:underline">Saber mais</a>
+                    <span className="text-[#B5720A] font-medium">Saber mais</span>
                     <span className="text-black font-bold">→</span>
                   </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
@@ -192,6 +259,15 @@ const IndexPage = () => {
                 />
               </div>
             </div>
+          </div>
+          
+          <div className="text-center mt-12">
+            <a 
+              href="/projects"
+              className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:border-[#B5720A] hover:text-[#B5720A] transition-all duration-300 uppercase tracking-wide"
+            >
+              Ver Todos os Projetos
+            </a>
           </div>
         </div>
       </section>
@@ -268,34 +344,134 @@ const IndexPage = () => {
           
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg shadow-xl p-8 border-2 border-gray-200">
-              <form className="space-y-6">
+              {/* Success Message */}
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 border-2 border-green-200 rounded-lg">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-black text-green-800 uppercase tracking-wide">
+                        Mensagem enviada com sucesso! Entraremos em contacto em breve.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-black text-red-800 uppercase tracking-wide mb-2">
+                        Erro ao enviar mensagem. 
+                      </p>
+                      <p className="text-xs text-red-700">
+                        Por favor tente novamente ou contacte-nos directamente em:
+                      </p>
+                      <div className="mt-2 space-y-1">
+                        <p className="text-xs text-red-700">
+                          📧 <a href="mailto:info@artcasa.pt" className="underline hover:text-red-900">info@artcasa.pt</a>
+                        </p>
+                        <p className="text-xs text-red-700">
+                          📞 <a href="tel:+351123456789" className="underline hover:text-red-900">+351 123 456 789</a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">Nome</label>
-                    <input type="text" className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium" />
+                    <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">Nome *</label>
+                    <input 
+                      type="text" 
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed" 
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">Email</label>
-                    <input type="email" className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium" />
+                    <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">Email *</label>
+                    <input 
+                      type="email" 
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed" 
+                    />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">Telefone</label>
-                    <input type="tel" className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium" />
+                    <input 
+                      type="tel" 
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed" 
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">Localidade</label>
-                    <input type="text" className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium" />
+                    <input 
+                      type="text" 
+                      name="location"
+                      value={formData.location}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed" 
+                    />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">Mensagem</label>
-                  <textarea rows="4" className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium" placeholder="Conte-nos sobre o seu projeto..."></textarea>
+                  <label className="block text-sm font-bold text-black mb-2 uppercase tracking-wide">Mensagem *</label>
+                  <textarea 
+                    rows="4" 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed" 
+                    placeholder="Conte-nos sobre o seu projeto..."
+                  />
                 </div>
                 <div className="text-center">
-                  <button type="submit" className="bg-black text-white px-12 py-4 rounded-lg font-black hover:bg-gray-800 transition-colors shadow-lg uppercase tracking-wide">
-                    Enviar Mensagem
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="bg-black text-white px-12 py-4 rounded-lg font-black hover:bg-gray-800 transition-colors shadow-lg uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto min-w-[200px]"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        A Enviar...
+                      </>
+                    ) : (
+                      'Enviar Mensagem'
+                    )}
                   </button>
                 </div>
               </form>

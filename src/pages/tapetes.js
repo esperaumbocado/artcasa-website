@@ -70,15 +70,22 @@ const TapetesPage = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {tapetesItems.map((image, index) => (
+            {tapetesItems.slice(0, Math.min(8, tapetesItems.length)).map((image, index) => (
               <div key={index} className="group cursor-pointer" onClick={openGallery}>
                 <div className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden">
-                  <div className="h-64 overflow-hidden">
+                  <div className="h-64 overflow-hidden relative">
                     <img 
                       src={image} 
                       alt={`Tapetes ${index + 1}`}
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />
+                    {index === 7 && tapetesItems.length > 8 && (
+                      <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+                        <span className="text-white text-lg font-bold">
+                          +{tapetesItems.length - 8} Mais Imagens
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -88,7 +95,7 @@ const TapetesPage = () => {
           <div className="text-center mt-12">
             <button 
               onClick={openGallery}
-              className="bg-[#B5720A] text-white px-12 py-4 rounded-xl font-black hover:bg-[#9A5D07] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 uppercase tracking-wide"
+              className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:border-[#B5720A] hover:text-[#B5720A] transition-all duration-300 uppercase tracking-wide"
             >
               Ver Galeria Completa
             </button>

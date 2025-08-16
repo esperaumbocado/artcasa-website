@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto ArtCasa</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa;">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+            <td style="padding: 20px 0;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                    
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #B5720A 0%, #9A5D07 100%); padding: 30px; text-align: center;">
+                            <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold; letter-spacing: 2px;">
+                                🏡 ARTCASA
+                            </h1>
+                            <p style="margin: 10px 0 0 0; color: rgba(255,255,255,0.9); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
+                                Decoração de Interiores
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            <div style="border-left: 4px solid #B5720A; padding-left: 20px; margin-bottom: 30px;">
+                                <h2 style="margin: 0 0 10px 0; color: #333333; font-size: 24px; font-weight: bold;">
+                                    Nova Mensagem de Contacto
+                                </h2>
+                                <p style="margin: 0; color: #666666; font-size: 16px;">
+                                    Recebeu uma nova mensagem através do website
+                                </p>
+                            </div>
+                            
+                            <!-- Contact Details -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 30px;">
+                                <tr>
+                                    <td style="padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+                                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                            <tr>
+                                                <td style="padding: 8px 0; border-bottom: 1px solid #e9ecef;">
+                                                    <strong style="color: #333333; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">👤 Nome:</strong>
+                                                    <span style="color: #666666; font-size: 16px; margin-left: 10px;">{{from_name}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 8px 0; border-bottom: 1px solid #e9ecef;">
+                                                    <strong style="color: #333333; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">✉️ Email:</strong>
+                                                    <a href="mailto:{{from_email}}" style="color: #B5720A; font-size: 16px; margin-left: 10px; text-decoration: none;">{{from_email}}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 8px 0; border-bottom: 1px solid #e9ecef;">
+                                                    <strong style="color: #333333; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">📞 Telefone:</strong>
+                                                    <a href="tel:{{phone}}" style="color: #B5720A; font-size: 16px; margin-left: 10px; text-decoration: none;">{{phone}}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 8px 0;">
+                                                    <strong style="color: #333333; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">📍 Localidade:</strong>
+                                                    <span style="color: #666666; font-size: 16px; margin-left: 10px;">{{location}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <!-- Message -->
+                            <div style="margin-bottom: 30px;">
+                                <h3 style="margin: 0 0 15px 0; color: #333333; font-size: 18px; font-weight: bold;">
+                                    💬 Mensagem:
+                                </h3>
+                                <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #B5720A;">
+                                    <p style="margin: 0; color: #555555; font-size: 16px; line-height: 1.6;">
+                                        {{message}}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Call to Action -->
+                            <div style="text-align: center; margin: 30px 0;">
+                                <a href="mailto:{{from_email}}" style="display: inline-block; background-color: #B5720A; color: #ffffff; padding: 15px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 14px;">
+                                    Responder Agora
+                                </a>
+            </div>
+        </td>
+    </tr>
+    
+    <!-- Footer -->
+    <tr>
+        <td style="background-color: #333333; padding: 30px; text-align: center;">
+            <p style="margin: 0 0 10px 0; color: #ffffff; font-size: 18px; font-weight: bold;">
+                ArtCasa - Decoração de Interiores
+            </p>
+            <p style="margin: 0 0 15px 0; color: #cccccc; font-size: 14px;">
+                Transformamos a sua casa num lar de sonho
+            </p>
+            <div style="border-top: 1px solid #555555; padding-top: 15px; margin-top: 15px;">
+                <p style="margin: 0; color: #999999; font-size: 12px;">
+                    Esta mensagem foi enviada através do formulário de contacto do website ArtCasa
+                </p>
+            </div>
+        </td>
+    </tr>
+    
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

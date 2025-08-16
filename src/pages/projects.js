@@ -10,6 +10,7 @@ const ProjectsPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0)
   const [selectedProject, setSelectedProject] = React.useState(null)
   const [showDescription, setShowDescription] = React.useState(false)
+  const [visibleProjects, setVisibleProjects] = React.useState(6) // Show 6 projects initially
 
   const openGallery = (project) => {
     setSelectedProject(project)
@@ -27,6 +28,10 @@ const ProjectsPage = () => {
 
   const toggleDescription = () => {
     setShowDescription(!showDescription)
+  }
+
+  const showMoreProjects = () => {
+    setVisibleProjects(prev => prev + 6) // Show 6 more projects each time
   }
 
   const nextImage = () => {
@@ -181,11 +186,34 @@ const ProjectsPage = () => {
         </div>
       </section>
 
+      {/* Stats Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="bg-white p-8 rounded-lg shadow-sm">
+              <div className="text-4xl font-black text-[#B5720A] mb-2">150+</div>
+              <div className="text-xl font-bold text-black uppercase tracking-wide">Projetos Concluídos</div>
+              <p className="text-gray-600 mt-2">Mais de 150 projetos realizados com sucesso em todo o país</p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-sm">
+              <div className="text-4xl font-black text-[#B5720A] mb-2">5★</div>
+              <div className="text-xl font-bold text-black uppercase tracking-wide">Avaliação Média</div>
+              <p className="text-gray-600 mt-2">Classificação média baseada em avaliações de clientes</p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-sm">
+              <div className="text-4xl font-black text-[#B5720A] mb-2">98%</div>
+              <div className="text-xl font-bold text-black uppercase tracking-wide">Clientes Satisfeitos</div>
+              <p className="text-gray-600 mt-2">Taxa de satisfação baseada em feedback direto dos clientes</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Projects Gallery */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
+            {projects.slice(0, visibleProjects).map((project, index) => (
               <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full group cursor-pointer"
                    onClick={() => openGallery(project)}>
                 <div className="h-64 overflow-hidden relative">
@@ -217,37 +245,17 @@ const ProjectsPage = () => {
             ))}
           </div>
           
-          <div className="text-center mt-12">
-            <button 
-              onClick={openGallery}
-              className="bg-[#B5720A] text-white px-12 py-4 rounded-xl font-black hover:bg-[#9A5D07] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 uppercase tracking-wide"
-            >
-              Ver Todos os Projetos
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="text-4xl font-black text-[#B5720A] mb-2">150+</div>
-              <div className="text-xl font-bold text-black uppercase tracking-wide">Projetos Concluídos</div>
-              <p className="text-gray-600 mt-2">Mais de 150 projetos realizados com sucesso em todo o país</p>
+          {/* Show More Button */}
+          {visibleProjects < projects.length && (
+            <div className="text-center mt-12">
+              <button 
+                onClick={showMoreProjects}
+                className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:border-[#B5720A] hover:text-[#B5720A] transition-all duration-300 uppercase tracking-wide"
+              >
+                Ver Mais Projetos ({projects.length - visibleProjects} restantes)
+              </button>
             </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="text-4xl font-black text-[#B5720A] mb-2">5★</div>
-              <div className="text-xl font-bold text-black uppercase tracking-wide">Avaliação Média</div>
-              <p className="text-gray-600 mt-2">Classificação média baseada em avaliações de clientes</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="text-4xl font-black text-[#B5720A] mb-2">98%</div>
-              <div className="text-xl font-bold text-black uppercase tracking-wide">Clientes Satisfeitos</div>
-              <p className="text-gray-600 mt-2">Taxa de satisfação baseada em feedback direto dos clientes</p>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 

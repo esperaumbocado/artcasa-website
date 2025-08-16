@@ -60,14 +60,7 @@ async function getNotionGalleryData() {
       
       // Extract page type
       const pageType = properties['Page Type']?.select?.name
-      console.log(`🔍 Processing page with pageType: ${pageType}`)
-      
-      if (!pageType || !data[pageType]) {
-        console.log(`❌ Skipping page with pageType: ${pageType} (not found in data object)`)
-        continue
-      }
-
-      console.log(`✅ Processing valid pageType: ${pageType}`)
+      if (!pageType || !data[pageType]) continue
 
       // Extract name (title)
       const name = properties['Name']?.title?.[0]?.plain_text || 'Untitled'

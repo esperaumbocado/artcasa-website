@@ -82,47 +82,8 @@ const CortinadosPage = () => {
         </div>
       </section>
 
-      {/* Calhas Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black text-black mb-6 uppercase tracking-wide">
-              <span className="text-[#B5720A]">CALHAS</span>
-            </h2>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Sistemas de calhas modernos e funcionais. Oferecemos uma vasta gama de calhas em diferentes materiais e acabamentos para complementar qualquer decoração.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {calhasImages.slice(0, 6).map((image, index) => (
-              <div key={index} className="group cursor-pointer" onClick={() => openGallery('calhas')}>
-                <div className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden">
-                  <div className="h-64 overflow-hidden">
-                    <img 
-                      src={image} 
-                      alt={`Calhas ${index + 1}`}
-                      className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="text-center">
-            <button 
-              onClick={() => openGallery('calhas')}
-              className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:border-[#B5720A] hover:text-[#B5720A] transition-all duration-300 uppercase tracking-wide"
-            >
-              Ver Galeria Completa
-            </button>
-          </div>
-        </div>
-      </section>
-
       {/* Cortinados Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-black text-black mb-6 uppercase tracking-wide">
@@ -134,15 +95,25 @@ const CortinadosPage = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {cortinadosImages.slice(0, 6).map((image, index) => (
+            {cortinadosImages.slice(0, 9).map((image, index) => (
               <div key={index} className="group cursor-pointer" onClick={() => openGallery('cortinados')}>
                 <div className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden">
-                  <div className="h-64 overflow-hidden">
+                  <div className="h-64 overflow-hidden relative">
                     <img 
                       src={image} 
                       alt={`Cortinados ${index + 1}`}
                       className="w-full h-full object-cover transition-transform group-hover:scale-105"
                     />
+                    
+                    {/* Show "+N more" overlay on the last visible image if there are more */}
+                    {index === 8 && cortinadosImages.length > 9 && (
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                        <div className="text-white text-center">
+                          <div className="text-3xl font-bold">+{cortinadosImages.length - 8}</div>
+                          <div className="text-sm uppercase tracking-wide">Mais Imagens</div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -152,6 +123,55 @@ const CortinadosPage = () => {
           <div className="text-center">
             <button 
               onClick={() => openGallery('cortinados')}
+              className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:border-[#B5720A] hover:text-[#B5720A] transition-all duration-300 uppercase tracking-wide"
+            >
+              Ver Galeria Completa
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Calhas Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-black mb-6 uppercase tracking-wide">
+              <span className="text-[#B5720A]">CALHAS</span>
+            </h2>
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              Sistemas de calhas modernos e funcionais. Oferecemos uma vasta gama de calhas em diferentes materiais e acabamentos para complementar qualquer decoração.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {calhasImages.slice(0, 9).map((image, index) => (
+              <div key={index} className="group cursor-pointer" onClick={() => openGallery('calhas')}>
+                <div className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden">
+                  <div className="h-64 overflow-hidden relative">
+                    <img 
+                      src={image} 
+                      alt={`Calhas ${index + 1}`}
+                      className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                    />
+                    
+                    {/* Show "+N more" overlay on the last visible image if there are more */}
+                    {index === 8 && calhasImages.length > 9 && (
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                        <div className="text-white text-center">
+                          <div className="text-3xl font-bold">+{calhasImages.length - 8}</div>
+                          <div className="text-sm uppercase tracking-wide">Mais Imagens</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center">
+            <button 
+              onClick={() => openGallery('calhas')}
               className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:border-[#B5720A] hover:text-[#B5720A] transition-all duration-300 uppercase tracking-wide"
             >
               Ver Galeria Completa

@@ -21,15 +21,15 @@ const EstoresPage = () => {
 
   const nextImage = () => {
     const images = activeGallery.startsWith('exterior') 
-      ? exteriorEstores[parseInt(activeGallery.split('-')[1])].images 
-      : interiorEstores[parseInt(activeGallery.split('-')[1])].images
+      ? (exteriorEstores[parseInt(activeGallery.split('-')[1])].processedImages || exteriorEstores[parseInt(activeGallery.split('-')[1])].images)
+      : (interiorEstores[parseInt(activeGallery.split('-')[1])].processedImages || interiorEstores[parseInt(activeGallery.split('-')[1])].images)
     setCurrentImageIndex((prev) => (prev + 1) % images.length)
   }
 
   const prevImage = () => {
     const images = activeGallery.startsWith('exterior') 
-      ? exteriorEstores[parseInt(activeGallery.split('-')[1])].images 
-      : interiorEstores[parseInt(activeGallery.split('-')[1])].images
+      ? (exteriorEstores[parseInt(activeGallery.split('-')[1])].processedImages || exteriorEstores[parseInt(activeGallery.split('-')[1])].images)
+      : (interiorEstores[parseInt(activeGallery.split('-')[1])].processedImages || interiorEstores[parseInt(activeGallery.split('-')[1])].images)
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
   }
 
@@ -132,10 +132,10 @@ const EstoresPage = () => {
 
           <div className="flex flex-wrap justify-center gap-8">
             {exteriorEstores.map((store, index) => (
-              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full w-full sm:w-80 lg:w-96">
+              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full w-full sm:w-80 lg:w-96 cursor-pointer" onClick={() => openGallery(`exterior-${index}`)}>
                 <div className="h-64 overflow-hidden relative">
                   <img 
-                    src={store.images[0]} 
+                    src={(store.processedImages || store.images)[0]} 
                     alt={store.name}
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
@@ -146,24 +146,30 @@ const EstoresPage = () => {
                   
                   {/* Thumbnail Preview */}
                   <div className="mb-4 min-h-[3rem] flex items-center">
-                    {store.images.length > 1 ? (
+                    {(store.processedImages || store.images).length > 1 ? (
                       <div className="flex space-x-2">
-                        {store.images.slice(1, 5).map((image, imgIndex) => (
+                        {(store.processedImages || store.images).slice(1, 5).map((image, imgIndex) => (
                           <div key={imgIndex} className="relative">
                             <img 
                               src={image} 
                               alt={`${store.name} ${imgIndex + 2}`}
                               className="w-12 h-12 object-cover rounded hover:scale-110 transition-transform cursor-pointer border border-gray-300 hover:border-[#B5720A]"
-                              onClick={() => openGallery(`exterior-${index}`)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openGallery(`exterior-${index}`);
+                              }}
                             />
                           </div>
                         ))}
-                        {store.images.length > 5 && (
+                        {(store.processedImages || store.images).length > 5 && (
                           <div 
                             className="w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded flex items-center justify-center text-gray-700 text-xs font-bold cursor-pointer transition-all border border-gray-300 hover:border-[#B5720A]"
-                            onClick={() => openGallery(`exterior-${index}`)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openGallery(`exterior-${index}`);
+                            }}
                           >
-                            +{store.images.length - 4}
+                            +{(store.processedImages || store.images).length - 4}
                           </div>
                         )}
                       </div>
@@ -173,7 +179,10 @@ const EstoresPage = () => {
                   </div>
                   
                   <button 
-                    onClick={() => openGallery(`exterior-${index}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openGallery(`exterior-${index}`);
+                    }}
                     className="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-medium hover:border-[#B5720A] hover:text-[#B5720A] transition-all duration-300 uppercase tracking-wide w-full text-sm"
                   >
                     Ver Galeria
@@ -200,10 +209,10 @@ const EstoresPage = () => {
 
           <div className="flex flex-wrap justify-center gap-8">
             {interiorEstores.map((store, index) => (
-              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full w-full sm:w-80 lg:w-96">
+              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full w-full sm:w-80 lg:w-96 cursor-pointer" onClick={() => openGallery(`interior-${index}`)}>
                 <div className="h-64 overflow-hidden relative">
                   <img 
-                    src={store.images[0]} 
+                    src={(store.processedImages || store.images)[0]} 
                     alt={store.name}
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
@@ -214,24 +223,30 @@ const EstoresPage = () => {
                   
                   {/* Thumbnail Preview */}
                   <div className="mb-4 min-h-[3rem] flex items-center">
-                    {store.images.length > 1 ? (
+                    {(store.processedImages || store.images).length > 1 ? (
                       <div className="flex space-x-2">
-                        {store.images.slice(1, 5).map((image, imgIndex) => (
+                        {(store.processedImages || store.images).slice(1, 5).map((image, imgIndex) => (
                           <div key={imgIndex} className="relative">
                             <img 
                               src={image} 
                               alt={`${store.name} ${imgIndex + 2}`}
                               className="w-12 h-12 object-cover rounded hover:scale-110 transition-transform cursor-pointer border border-gray-300 hover:border-[#B5720A]"
-                              onClick={() => openGallery(`interior-${index}`)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openGallery(`interior-${index}`);
+                              }}
                             />
                           </div>
                         ))}
-                        {store.images.length > 5 && (
+                        {(store.processedImages || store.images).length > 5 && (
                           <div 
                             className="w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded flex items-center justify-center text-gray-700 text-xs font-bold cursor-pointer transition-all border border-gray-300 hover:border-[#B5720A]"
-                            onClick={() => openGallery(`interior-${index}`)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openGallery(`interior-${index}`);
+                            }}
                           >
-                            +{store.images.length - 4}
+                            +{(store.processedImages || store.images).length - 4}
                           </div>
                         )}
                       </div>
@@ -241,7 +256,10 @@ const EstoresPage = () => {
                   </div>
                   
                   <button 
-                    onClick={() => openGallery(`interior-${index}`)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openGallery(`interior-${index}`);
+                    }}
                     className="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-medium hover:border-[#B5720A] hover:text-[#B5720A] transition-all duration-300 uppercase tracking-wide w-full text-sm"
                   >
                     Ver Galeria
@@ -261,8 +279,8 @@ const EstoresPage = () => {
             <div className="flex justify-between items-center mb-4 flex-shrink-0">
               <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-wide">
                 {activeGallery.startsWith('exterior') 
-                  ? `${exteriorEstores[parseInt(activeGallery.split('-')[1])].name} - ${currentImageIndex + 1} de ${exteriorEstores[parseInt(activeGallery.split('-')[1])].images.length}`
-                  : `${interiorEstores[parseInt(activeGallery.split('-')[1])].name} - ${currentImageIndex + 1} de ${interiorEstores[parseInt(activeGallery.split('-')[1])].images.length}`
+                  ? `${exteriorEstores[parseInt(activeGallery.split('-')[1])].name} - ${currentImageIndex + 1} de ${(exteriorEstores[parseInt(activeGallery.split('-')[1])].processedImages || exteriorEstores[parseInt(activeGallery.split('-')[1])].images).length}`
+                  : `${interiorEstores[parseInt(activeGallery.split('-')[1])].name} - ${currentImageIndex + 1} de ${(interiorEstores[parseInt(activeGallery.split('-')[1])].processedImages || interiorEstores[parseInt(activeGallery.split('-')[1])].images).length}`
                 }
               </h3>
               <button 
@@ -277,8 +295,8 @@ const EstoresPage = () => {
             <div className="relative flex-1 flex items-center justify-center min-h-0">
               <img 
                 src={(activeGallery.startsWith('exterior') 
-                  ? exteriorEstores[parseInt(activeGallery.split('-')[1])].images 
-                  : interiorEstores[parseInt(activeGallery.split('-')[1])].images
+                  ? (exteriorEstores[parseInt(activeGallery.split('-')[1])].processedImages || exteriorEstores[parseInt(activeGallery.split('-')[1])].images)
+                  : (interiorEstores[parseInt(activeGallery.split('-')[1])].processedImages || interiorEstores[parseInt(activeGallery.split('-')[1])].images)
                 )[currentImageIndex]} 
                 alt={`Galeria ${currentImageIndex + 1}`}
                 className="max-w-full max-h-full object-contain rounded-lg"
@@ -302,8 +320,8 @@ const EstoresPage = () => {
             {/* Thumbnails */}
             <div className="flex justify-center mt-6 space-x-2 overflow-x-auto flex-shrink-0">
               {(activeGallery.startsWith('exterior') 
-                ? exteriorEstores[parseInt(activeGallery.split('-')[1])].images 
-                : interiorEstores[parseInt(activeGallery.split('-')[1])].images
+                ? (exteriorEstores[parseInt(activeGallery.split('-')[1])].processedImages || exteriorEstores[parseInt(activeGallery.split('-')[1])].images)
+                : (interiorEstores[parseInt(activeGallery.split('-')[1])].processedImages || interiorEstores[parseInt(activeGallery.split('-')[1])].images)
               ).map((image, index) => (
                 <div key={index} className="flex-shrink-0">
                   <img 
