@@ -50,6 +50,7 @@ const Navigation = () => {
                 )}
               </div>
               <a href="/projects" className="text-gray-800 hover:text-[#B5720A] px-3 py-2 text-sm font-bold transition-colors uppercase tracking-wide">Projetos</a>
+              <a href="/quem-somos" className="text-gray-800 hover:text-[#B5720A] px-3 py-2 text-sm font-bold transition-colors uppercase tracking-wide">Quem Somos</a>
               <a href="/#testimonials" className="text-gray-800 hover:text-[#B5720A] px-3 py-2 text-sm font-bold transition-colors uppercase tracking-wide">Opiniões</a>
               <a href="/#contact" className="text-gray-800 hover:text-[#B5720A] px-3 py-2 text-sm font-bold transition-colors uppercase tracking-wide">Contacto</a>
             </div>
@@ -96,6 +97,7 @@ const Navigation = () => {
                 </div>
               )}
               <a href="/projects" className="block text-gray-800 hover:text-[#B5720A] px-3 py-2 text-base font-bold transition-colors uppercase tracking-wide" onClick={toggleMenu}>Projetos</a>
+              <a href="/quem-somos" className="block text-gray-800 hover:text-[#B5720A] px-3 py-2 text-base font-bold transition-colors uppercase tracking-wide" onClick={toggleMenu}>Quem Somos</a>
               <a href="/#testimonials" className="block text-gray-800 hover:text-[#B5720A] px-3 py-2 text-base font-bold transition-colors uppercase tracking-wide" onClick={toggleMenu}>Opiniões</a>
               <a href="/#contact" className="block text-gray-800 hover:text-[#B5720A] px-3 py-2 text-base font-bold transition-colors uppercase tracking-wide" onClick={toggleMenu}>Contacto</a>
             </div>

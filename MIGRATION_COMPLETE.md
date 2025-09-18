@@ -25,6 +25,7 @@ The Notion integration for all gallery pages in the ArtCasa website has been **1
 - ✅ Integrated with `useGalleryData()` hook
 - ✅ Enhanced with project details (location, year, area, style)
 - ✅ Fetches "projects" data with descriptions
+- ✅ **Image caching fixed** - Project cards now use downloaded images
 - ✅ Fallback to hardcoded project data if Notion unavailable
 
 ### 5. **Estofos** (`/estofos`) - **✅ NEWLY COMPLETED**

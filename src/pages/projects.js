@@ -60,9 +60,7 @@ const ProjectsPage = () => {
       ],
       projectInfo: {
         location: "Lisboa",
-        year: 2023,
-        area: "45m²",
-        style: "Moderno"
+        year: 2023
       }
     },
     {
@@ -75,9 +73,7 @@ const ProjectsPage = () => {
       ],
       projectInfo: {
         location: "Porto",
-        year: 2023,
-        area: "25m²",
-        style: "Clássico"
+        year: 2023
       }
     },
     {
@@ -89,9 +85,7 @@ const ProjectsPage = () => {
       ],
       projectInfo: {
         location: "Braga",
-        year: 2023,
-        area: "120m²",
-        style: "Corporativo"
+        year: 2023
       }
     },
     {
@@ -103,9 +97,7 @@ const ProjectsPage = () => {
       ],
       projectInfo: {
         location: "Coimbra",
-        year: 2023,
-        area: "15m²",
-        style: "Contemporâneo"
+        year: 2023
       }
     },
     {
@@ -118,9 +110,7 @@ const ProjectsPage = () => {
       ],
       projectInfo: {
         location: "Aveiro",
-        year: 2023,
-        area: "80m²",
-        style: "Luxo"
+        year: 2023
       }
     },
     {
@@ -132,9 +122,7 @@ const ProjectsPage = () => {
       ],
       projectInfo: {
         location: "Faro",
-        year: 2023,
-        area: "90m²",
-        style: "Minimalista"
+        year: 2023
       }
     },
     {
@@ -147,9 +135,7 @@ const ProjectsPage = () => {
       ],
       projectInfo: {
         location: "Viseu",
-        year: 2023,
-        area: "30m²",
-        style: "Clássico"
+        year: 2023
       }
     },
     {
@@ -161,9 +147,7 @@ const ProjectsPage = () => {
       ],
       projectInfo: {
         location: "Óbidos",
-        year: 2023,
-        area: "500m²",
-        style: "Boutique"
+        year: 2023
       }
     }
   ]
@@ -176,7 +160,7 @@ const ProjectsPage = () => {
       <section className="relative py-24 bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-black leading-none mb-6">
-            NOSSOS
+            OS NOSSOS
             <span className="block text-[#B5720A]">PROJETOS</span>
           </h1>
           <div className="w-32 h-2 bg-black mx-auto mb-8"></div>
@@ -218,7 +202,7 @@ const ProjectsPage = () => {
                    onClick={() => openGallery(project)}>
                 <div className="h-64 overflow-hidden relative">
                   <img 
-                    src={project.images?.[0] || project.image} 
+                    src={project.processedImages?.[0] || project.images?.[0] || project.image} 
                     alt={project.name || project.title}
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
@@ -228,9 +212,9 @@ const ProjectsPage = () => {
                     </span>
                   </div>
                   {/* Multiple images indicator */}
-                  {project.images && project.images.length > 1 && (
+                  {((project.processedImages && project.processedImages.length > 1) || (project.images && project.images.length > 1)) && (
                     <div className="absolute bottom-4 right-4 bg-black bg-opacity-75 text-white px-2 py-1 rounded text-xs font-medium">
-                      +{project.images.length - 1} fotos
+                      +{(project.processedImages || project.images).length - 1} fotos
                     </div>
                   )}
                 </div>
@@ -329,18 +313,10 @@ const ProjectsPage = () => {
               
               {/* Project Details */}
               {selectedProject.projectInfo && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="text-gray-400 uppercase tracking-wide font-bold">Ano</span>
                     <p className="text-white font-medium">{selectedProject.projectInfo.year}</p>
-                  </div>
-                  <div>
-                    <span className="text-gray-400 uppercase tracking-wide font-bold">Área</span>
-                    <p className="text-white font-medium">{selectedProject.projectInfo.area}</p>
-                  </div>
-                  <div>
-                    <span className="text-gray-400 uppercase tracking-wide font-bold">Estilo</span>
-                    <p className="text-white font-medium">{selectedProject.projectInfo.style}</p>
                   </div>
                   <div>
                     <span className="text-gray-400 uppercase tracking-wide font-bold">Local</span>

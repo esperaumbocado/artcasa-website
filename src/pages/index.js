@@ -5,6 +5,8 @@ import estoresImage from "../images/estores.png"
 import tapetesImage from "../images/tapetes.png"
 import cortinadosImage from "../images/cortinados.png"
 import papelparedeImage from "../images/papelparede.png"
+import estofosImage from "../images/estofos.png"
+import texteisLarImage from "../images/texteis-lar.png"
 import Navigation from "../components/Navigation"
 import Footer from "../components/Footer"
 import heroImage from "../images/hero.png"  
@@ -135,44 +137,44 @@ const IndexPage = () => {
             {[
               { 
                 name: "Estores", 
-                description: "Estores de qualidade superior para todos os espaços",
+                description: "Na Art´Casa encontra estores versáteis e funcionais: estores de rolo, venezianos, vertika, painel japonês, romanetes, mosquiteiras e estores pelissados.",
                 image: estoresImage,
                 link: "/estores"
               },
               { 
                 name: "Cortinados", 
-                description: "Cortinas elegantes e funcionais para todos os espaços",
+                description: "Na Art´Casa fazemos a confeção e a aplicação de cortinados personalizados com tecidos de qualidade e acabamento profissional.",
                 image: cortinadosImage,
                 link: "/cortinados"
               },
               { 
                 name: "Tapetes", 
-                description: "Tapetes premium que complementam qualquer decoração",
+                description: "Na Art´Casa fabricamos tapetes à medida, para que cada detalhe combine com o seu espaço. Trabalhamos com diferentes cores, texturas e estilos, oferecendo opções que vão do clássico ao moderno.",
                 image: tapetesImage,
                 link: "/tapetes"
               },
               { 
                 name: "Papel de Parede", 
-                description: "Papéis de parede modernos e clássicos",
+                description: "Na Art´Casa damos cor e estilo ao seu espaço através dos nossos papéis de parede de qualidade. Desde padrões elegantes a texturas sofisticadas, temos a solução perfeita para o seu projeto.",
                 image: papelparedeImage,
                 link: "/papel-parede"
               },
               { 
                 name: "Têxteis Lar", 
-                description: "Almofadas, colchas e outros têxteis decorativos",
-                image: "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                description: "Na Art´Casa encontra têxteis lar elegantes e aconchegantes: cortinados, colchas, edredões, almofadas decorativas, mantas, tapetes e toalhas de alta qualidade.",
+                image: texteisLarImage,
                 link: "/texteis-lar"
               },
               { 
                 name: "Estofos", 
-                description: "Revestimentos e estofados personalizados",
-                image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                description: "Na Art´Casa revestimos e estofamos de forma personalizada e ao seu gosto. Renovamos e criamos peças únicas com tecidos de alta qualidade e acabamentos profissionais.",
+                image: estofosImage,
                 link: "/estofos"
               }
             ].map((category, index) => (
               <a key={index} href={category.link} className="group cursor-pointer w-full sm:w-80 lg:w-96 block">
-                <div className="bg-white rounded-lg p-8 hover:bg-gray-50 transition-colors border border-gray-200 hover:border-black shadow-sm hover:shadow-lg h-96 flex flex-col">
-                  <div className="h-32 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg mb-6 overflow-hidden border border-gray-100">
+                <div className="bg-white rounded-lg p-8 hover:bg-gray-50 transition-colors border border-gray-200 hover:border-black shadow-sm hover:shadow-lg h-[28rem] flex flex-col">
+                  <div className="h-40 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg mb-6 overflow-hidden border border-gray-100">
                     <img 
                       src={category.image} 
                       alt={category.name}
@@ -452,7 +454,7 @@ const IndexPage = () => {
                     required
                     disabled={isSubmitting}
                     className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#B5720A] focus:border-[#B5720A] transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed" 
-                    placeholder="Conte-nos sobre o seu projeto..."
+                    placeholder="Conte-nos sobre o seu projeto, tipos de tecido, medidas e outros detalhes..."
                   />
                 </div>
                 <div className="text-center">

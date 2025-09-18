@@ -132,7 +132,7 @@ const EstoresPage = () => {
 
           <div className="flex flex-wrap justify-center gap-8">
             {exteriorEstores.map((store, index) => (
-              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full w-full sm:w-80 lg:w-96 cursor-pointer" onClick={() => openGallery(`exterior-${index}`)}>
+              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col w-full sm:w-80 lg:w-96 cursor-pointer" style={{ height: '36rem' }} onClick={() => openGallery(`exterior-${index}`)}>
                 <div className="h-64 overflow-hidden relative">
                   <img 
                     src={(store.processedImages || store.images)[0]} 
@@ -142,7 +142,9 @@ const EstoresPage = () => {
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-black text-black mb-3 uppercase tracking-wide">{store.name}</h3>
-                  <p className="text-gray-700 mb-4 leading-relaxed flex-1">{store.description}</p>
+                  <div className="flex-1 mb-4">
+                    <p className="text-gray-700 leading-relaxed">{store.description}</p>
+                  </div>
                   
                   {/* Thumbnail Preview */}
                   <div className="mb-4 min-h-[3rem] flex items-center">
@@ -209,7 +211,7 @@ const EstoresPage = () => {
 
           <div className="flex flex-wrap justify-center gap-8">
             {interiorEstores.map((store, index) => (
-              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col h-full w-full sm:w-80 lg:w-96 cursor-pointer" onClick={() => openGallery(`interior-${index}`)}>
+              <div key={index} className="bg-white rounded-lg border-2 border-gray-200 hover:border-black shadow-sm hover:shadow-lg transition-all overflow-hidden flex flex-col w-full sm:w-80 lg:w-96 cursor-pointer" style={{ height: '36rem' }} onClick={() => openGallery(`interior-${index}`)}>
                 <div className="h-64 overflow-hidden relative">
                   <img 
                     src={(store.processedImages || store.images)[0]} 
@@ -219,7 +221,9 @@ const EstoresPage = () => {
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-black text-black mb-3 uppercase tracking-wide">{store.name}</h3>
-                  <p className="text-gray-700 mb-4 leading-relaxed flex-1">{store.description}</p>
+                  <div className="flex-1 mb-4">
+                    <p className="text-gray-700 leading-relaxed">{store.description}</p>
+                  </div>
                   
                   {/* Thumbnail Preview */}
                   <div className="mb-4 min-h-[3rem] flex items-center">
